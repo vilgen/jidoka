@@ -25,7 +25,7 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
+build/docker/redis-data/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
