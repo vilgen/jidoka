@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisPooled;
 import redis.clients.jedis.search.Query;
 
 @Configuration
-public final class JedisClient {
+public class JedisClient {
 
         private final static String HOST = "localhost";
         private final static int PORT = 6379;

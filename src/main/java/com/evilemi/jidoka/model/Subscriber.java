@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Subscriber {
 
-        private int id;
+        private String id;
         private String msisdn;
         private String name;
         private String insertDateTime;

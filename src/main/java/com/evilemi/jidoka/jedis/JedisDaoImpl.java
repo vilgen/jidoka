@@ -5,10 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPooled;
+import redis.clients.jedis.search.FTCreateParams;
+import redis.clients.jedis.search.IndexDataType;
 import redis.clients.jedis.search.Query;
+import redis.clients.jedis.search.schemafields.NumericField;
+import redis.clients.jedis.search.schemafields.TagField;
+import redis.clients.jedis.search.schemafields.TextField;
 
-@Repository
+@Service
 public class JedisDaoImpl implements JedisDao {
 
         @Autowired
@@ -35,7 +41,18 @@ public class JedisDaoImpl implements JedisDao {
 
         @Override
         public void createSubscriber(Subscriber subscriber) {
+                jedisClient.ftCreate("idx:subscribers",
+                        FTCreateParams.createParams()
+                                .on(IndexDataType.JSON)
+                                .addPrefix("subscriber:"),
+                        TextField.of("$.id").as("id"),
+                        TextField.of("$.msisdn").as("msisdn"),
+                        TextField.of("$.name").as("name"),
+                        TextField.of("$.insertDateTime").as("insertDateTime"),
+                        TextField.of("$.updateDateTime").as("updateDateTime")
+                );
 
+                jedisClient.jsonSetWithEscape(subscriber.getId(), subscriber);
         }
 
         @Override
