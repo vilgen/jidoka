@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPooled;
+import redis.clients.jedis.search.FTCreateParams;
+import redis.clients.jedis.search.IndexDataType;
 import redis.clients.jedis.search.Query;
+import redis.clients.jedis.search.schemafields.TextField;
 
 @Configuration
 public class JedisClient {
@@ -17,5 +20,4 @@ public class JedisClient {
         public JedisPooled openConnection() {
                 return new JedisPooled(HOST, PORT);
         }
-
 }
